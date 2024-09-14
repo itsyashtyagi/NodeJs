@@ -1,43 +1,6 @@
-1726300450091 : New Request Recieved
-1726300472436 : New Request Recieved
-1726300500472 : New Request Recieved
-1726300500746 : New Request Recieved
-1726300507163 : New Request Recieved
-1726300507225 : New Request Recieved
-1726300594547 : / New Request Recieved
-1726300594644 : /favicon.ico New Request Recieved
-1726300602609 : /about New Request Recieved
-1726300602677 : /favicon.ico New Request Recieved
-1726300611827 : /about/contacts New Request Recieved
-1726300611901 : /favicon.ico New Request Recieved
-1726300779857 : /about/contacts New Request Recieved
-1726300779943 : /favicon.ico New Request Recieved
-1726300784900 : /about/contacts New Request Recieved
-1726300784967 : /favicon.ico New Request Recieved
-1726300797523 : /about New Request Recieved
-1726300797609 : /favicon.ico New Request Recieved
-1726300800476 : /about New Request Recieved
-1726300800538 : /favicon.ico New Request Recieved
-1726300850555 : /about New Request Recieved
-1726300850632 : /favicon.ico New Request Recieved
-1726300851763 : /about New Request Recieved
-1726300851825 : /favicon.ico New Request Recieved
-1726300955216 : /about New Request Recieved
-1726300955288 : /favicon.ico New Request Recieved
-1726300959822 : /about/us New Request Recieved
-1726300959910 : /favicon.ico New Request Recieved
-1726311362066 : / New Request Recieved
-1726311367592 : /about New Request Recieved
-1726311434667 : /about New Request Recieved
-1726311435765 : /about New Request Recieved
-1726311437987 : / New Request Recieved
-1726311496006 : / New Request Recieved
-1726311496083 : /favicon.ico New Request Recieved
-1726311769686 : / New Request Recieved
-1726311769776 : /favicon.ico New Request Recieved
-1726311796190 : /about New Request Recieved
-1726311796371 : /favicon.ico New Request Recieved
-1726311845760 : /about?myName=yash?lastname=tyagi New Request Recieved
-1726311850325 : /favicon.ico New Request Recieved
-1726312014204 : /about?myName=yash?lastname=tyagi New Request Recieved
-1726312180385 : /about?myname=yashtyagi&userId=1 New Request Recieved
+1726313248731 : GET  /about?myname=yashtyagi&userId=1 New Request Recieved
+1726313254329 : GET  /about New Request Recieved
+1726313261172 : GET  /signup New Request Recieved
+1726313332056 : GET  /signup New Request Recieved
+1726313336494 : GET  /about New Request Recieved
+1726313340551 : GET  /about/signup New Request Recieved
