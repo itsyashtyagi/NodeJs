@@ -1,0 +1,22 @@
+// Version
+
+// 
+4.21.0
+
+1st Part -> 4
+2nd Part -> 21
+3rd Part -> 0
+
+// 3rd Part (Last Part) - Minor Fixes (Optional)
+Latest -> 4.21.1
+
+// 2nd Part - Recommended Bug Fixes (Security Fixes) OR Something new big feature added in it
+Latest -> 4.22.2
+
+// 1st Part - Major Release / Breaking Update
+Latest -> 5.1.0
+
+
+// To specify the version install of express - npm install express@17.2.1
+
+^ - Install all Recommended and Minor Fixes Automatically
