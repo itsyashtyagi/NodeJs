@@ -27,13 +27,14 @@ app.get("/users", (req, res) => {
       ${users.map((user) => `<li>${user.first_name}</li>`).join("")}
     </ul>
     `;
-    res.send(html);
+    res.status(200).send(html);
 });
 
 app.route("/api/users/:id").get((req, res) => {
     const id = Number(req.params.id);
     const user = users.find((user) => user.id === id);
-    return res.json(user);
+    if(!user) return res.status(404).json({ status : "user not found"});
+    return res.status(200).json(user);
 }).patch((req, res) => {
     // TODO : Edit the user with id
     const id = Number(req.params.id);
@@ -76,18 +77,23 @@ app.route("/api/users/:id").get((req, res) => {
 
 //REST API
 app.get("/api/users", (req, res) => {
-    return res.json(users);
+    res.setHeader("X-MyName", "Yash Tyagi"); // Custom Headers
+    // Always add X to custom headers
+    return res.status(200).json(users);
 });
 
 app.post("/api/users", (req, res) => {
     const body = req.body;
+    if(!body || !body.first_name || !body.email){
+        return res.status(400).json({status : "Bad Request somefields are missing"});
+    }
     users.push({ id: users.length + 1, ...body});
     fs.writeFile("./user_data.json", JSON.stringify(users), (err, data) => {
         if(err){
             return res.json({status : "something went wrong"});
         }
         else{
-            return res.json({status : "new user created"});
+            return res.status(201).json({status : "new user created"});
         }
     });
 });
