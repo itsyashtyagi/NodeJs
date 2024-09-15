@@ -1,0 +1,3 @@
+1726415871353: GET: /api/users1726415890393: GET: /api/users/61726415919551: GET: /api/users
+1726415922751: GET: /api/users/6
+1726415940629: DELETE: /api/users/3
