@@ -1,9 +1,41 @@
 const express = require("express");
-const users = require("./user_data.json");
+const mongoose = require("mongoose");
 const fs = require("fs");
 
 const app = express();
 const PORT = 8000;
+
+// Connection 
+mongoose
+  .connect("mongodb://127.0.0.1:27017/project-one")
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.log("Mongo Error", err));
+
+// Schema
+const userSchema = new mongoose.Schema({
+    firstName :{
+        type : String, 
+        required : true, 
+    }, 
+    lastName : {
+        type : String, 
+    }, 
+    email :{
+        type : String, 
+        required : true, 
+        unique : true, 
+    }, 
+    jobTitle : {
+        type : String, 
+    }, 
+    gender :{
+        type : String, 
+    }, 
+}, 
+{timestamps : true}
+)
+
+const User = mongoose.model('user', userSchema);
 
 // Middleware - Plugin
 app.use(express.urlencoded({extended : false}));
@@ -21,81 +53,54 @@ app.use((req, res, next) => {
 
 // Routes
 
-app.get("/users", (req, res) => {
+app.get("/users", async (req, res) => {
+    const allDbusers = await User.find({});
     const html = `
     <ul> 
-      ${users.map((user) => `<li>${user.first_name}</li>`).join("")}
+      ${allDbusers.map((user) => `<li>${user.firstName} - ${user.email}</li>`).join("")}
     </ul>
     `;
     res.status(200).send(html);
 });
 
-app.route("/api/users/:id").get((req, res) => {
-    const id = Number(req.params.id);
-    const user = users.find((user) => user.id === id);
+app.route("/api/users/:id").get( async (req, res) => {
+    const user = await User.findById(req.params.id);
     if(!user) return res.status(404).json({ status : "user not found"});
     return res.status(200).json(user);
-}).patch((req, res) => {
+}).patch( async (req, res) => {
     // TODO : Edit the user with id
-    const id = Number(req.params.id);
-    const userIndex = users.findIndex((user) => user.id === id);
+    await User.findByIdAndUpdate(req.params.id, { lastName : "Changed"});
+    return res.status(204).json({ status : "Success"});
 
-    if(userIndex === -1){
-        res.json({status : "Failed to Edit the User Data"});
-    }
-
-    const updatedUser = {...users[userIndex], ...req.body};
-    users[userIndex] = updatedUser;
-
-    fs.writeFile("./user_data.json", JSON.stringify(users), (err, data) => {
-        if(err){
-            res.json({status : "Something went wrong"});
-        } else{
-            res.json({status : "User Detailed Updated Successfully", id : id});
-        }
-    })
-
-}).delete((req, res) => {
+}).delete( async (req, res) => {
     // TODO : Delete the user with id
-    const id = Number(req.params.id);
-    const userIndex = users.findIndex((user) => user.id === id);
-
-    if(userIndex === -1){
-        return res.json({status : "Failed to Delete the user"});
-    }
-
-    users.splice(userIndex, 1);
-
-    fs.writeFile("./user_data.json", JSON.stringify(users), (err, data) => {
-        if(err){
-            return res.json({status : "Something went wrong"});
-        } else{
-            return res.json({status : "User Deleted Successfully", id : id});
-        }
-    });
+    await User.findByIdAndDelete(req.params.id);
+    return res.status(201).json({ status : "Success" });
 });
 
 //REST API
-app.get("/api/users", (req, res) => {
+app.get("/api/users", async (req, res) => {
+    const allDbUsers = await User.find({});
     res.setHeader("X-MyName", "Yash Tyagi"); // Custom Headers
     // Always add X to custom headers
-    return res.status(200).json(users);
+    return res.status(200).json(allDbUsers);
 });
 
-app.post("/api/users", (req, res) => {
+app.post("/api/users", async (req, res) => {
     const body = req.body;
     if(!body || !body.first_name || !body.email){
         return res.status(400).json({status : "Bad Request somefields are missing"});
     }
-    users.push({ id: users.length + 1, ...body});
-    fs.writeFile("./user_data.json", JSON.stringify(users), (err, data) => {
-        if(err){
-            return res.json({status : "something went wrong"});
-        }
-        else{
-            return res.status(201).json({status : "new user created"});
-        }
+    
+    const result = await User.create({
+        firstName : body.first_name, 
+        lastName : body.last_name, 
+        email : body.email, 
+        gender : body.gender, 
+        jobTitle : body.job_title, 
     });
+
+    return res.status(201).json({status : "Success"});
 });
 
 // app.get("/api/users/:id", (req, res) => {
